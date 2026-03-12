@@ -1,0 +1,6 @@
+@wealthify_HostAddress = http://localhost:5152
+
+GET {{wealthify_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
