@@ -16,7 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="Database\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="DTOs\InvestmentType\" />
+    <Folder Include="Entity\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Middlewares\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

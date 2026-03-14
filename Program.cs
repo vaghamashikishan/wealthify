@@ -1,5 +1,12 @@
+
 using Microsoft.EntityFrameworkCore;
 using wealthify.Database;
+using wealthify.Extensions;
+using wealthify.Middlewares;
+using wealthify.Repositories;
+using wealthify.Repositories.Interfaces;
+using wealthify.Services;
+using wealthify.Services.Interfaces;
 
 DotNetEnv.Env.Load();
 
@@ -20,7 +27,9 @@ builder.Services.AddHealthChecks()
         tags: new[] { "db", "sql", "postgres" }
     );
 
-// Add services to the container.
+builder.Services.AddApplicationServices();
+
+builder.Services.AddScoped<GlobalExceptionHandlerMiddleware>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -31,21 +40,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-
     app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "Wealthify API v1");
-    });
+        options.SwaggerEndpoint("/openapi/v1.json", "Wealthify API v1"));
 }
 
 app.UseHttpsRedirection();
-
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.UseAuthorization();
-
-// Map health check endpoint
-app.MapHealthChecks("/health");
-
+app.MapHealthChecks("/health"); // Map health check endpoint
 app.MapControllers();
 
 app.Run();
