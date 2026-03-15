@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using wealthify.Exceptions;
 using wealthify.Database;
 using wealthify.Entity;
+using wealthify.Exceptions;
 using wealthify.Repositories.Interfaces;
 
 namespace wealthify.Repositories;
