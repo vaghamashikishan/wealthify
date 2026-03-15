@@ -1,6 +1,6 @@
-namespace wealthify.DTOs.InvestmentType;
+namespace wealthify.DTOs.FamilyMember;
 
-public record InvestmentTypeDto
+public record FamilyMemberDto
 {
     public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
