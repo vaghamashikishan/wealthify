@@ -11,7 +11,7 @@ public class InvestmentTypeService(IInvestmentTypeRepository repository) : IInve
 {
     public async Task<InvestmentTypeDto> CreateInvestmentTypeAsync(CreateInvestmentTypeDto dto, CancellationToken cancellationToken = default)
     {
-        var normalizedName = dto.Name.Trim();
+        var normalizedName = dto.Name.Trim().ToLower();
         if (await repository.ExistsByNameAsync(normalizedName, cancellationToken))
         {
             throw new ConflictException($"Investment type '{normalizedName}' already exists.");
@@ -19,8 +19,7 @@ public class InvestmentTypeService(IInvestmentTypeRepository repository) : IInve
 
         var investmentType = new InvestmentType
         {
-            Name = normalizedName,
-            CreatedAt = DateTime.UtcNow
+            Name = normalizedName
         };
 
         var createdInvestmentType = await repository.CreateInvestmentTypeAsync(investmentType, cancellationToken);

@@ -1,4 +1,4 @@
-using wealthify.Entity;
+namespace wealthify.DTOs.InvestmentType;
 
 public record InvestmentTypeDto
 {

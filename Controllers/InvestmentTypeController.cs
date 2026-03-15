@@ -27,7 +27,7 @@ public class InvestmentTypeController(IInvestmentTypeService service) : Controll
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ApiResponse<InvestmentTypeDto>>> GetInvestmentTypeById([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<ApiResponse<InvestmentTypeDto?>>> GetInvestmentTypeById([FromRoute] int id, CancellationToken cancellationToken)
     {
         var investmentType = await service.GetByIdAsync(id, cancellationToken);
         if (investmentType is null)
@@ -35,7 +35,7 @@ public class InvestmentTypeController(IInvestmentTypeService service) : Controll
             return NotFound(new ApiResponse
             {
                 Message = "Investment type not found",
-                Errors = [$"No investment type exists for id"]
+                Errors = ["No investment type exists for id"]
             });
         }
 

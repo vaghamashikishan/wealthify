@@ -3,10 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using wealthify.Database;
 using wealthify.Extensions;
 using wealthify.Middlewares;
-using wealthify.Repositories;
-using wealthify.Repositories.Interfaces;
-using wealthify.Services;
-using wealthify.Services.Interfaces;
 
 DotNetEnv.Env.Load();
 

@@ -1,4 +1,5 @@
 using System;
+using wealthify.DTOs.InvestmentType;
 using wealthify.Entity;
 
 namespace wealthify.Extensions;
