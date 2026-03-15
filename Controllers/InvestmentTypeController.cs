@@ -14,24 +14,16 @@ public class InvestmentTypeController(IInvestmentTypeService service) : Controll
     [HttpPost]
     public async Task<ActionResult<ApiResponse<InvestmentTypeDto>>> CreateInvestmentType([FromBody] CreateInvestmentTypeDto dto, CancellationToken cancellationToken)
     {
-        try
-        {
-            var created = await service.CreateInvestmentTypeAsync(dto, cancellationToken);
-            return CreatedAtAction(nameof(GetInvestmentTypeById), new { id = created.Id }, new ApiResponse<InvestmentTypeDto>
+        var createdInvestmentType = await service.CreateInvestmentTypeAsync(dto, cancellationToken);
+        return CreatedAtAction(
+            nameof(GetInvestmentTypeById),
+            new { id = createdInvestmentType.Id },
+            new ApiResponse<InvestmentTypeDto>
             {
-                Data = created,
+                Data = createdInvestmentType,
                 Message = "Investment type created successfully"
-            });
-        }
-        catch (ConflictException)
-        {
-            throw;
-            // return Conflict(new ApiResponse
-            // {
-            //     Message = "Investment type creation failed",
-            //     Errors = [ex.Message]
-            // });
-        }
+            }
+        );
     }
 
     [HttpGet("{id:int}")]
@@ -43,15 +35,11 @@ public class InvestmentTypeController(IInvestmentTypeService service) : Controll
             return NotFound(new ApiResponse
             {
                 Message = "Investment type not found",
-                Errors = [$"No investment type exists for id '{id}'."]
+                Errors = [$"No investment type exists for id"]
             });
         }
 
-        return Ok(new ApiResponse<InvestmentTypeDto>
-        {
-            Data = investmentType,
-            Message = "Investment type retrieved successfully"
-        });
+        return Ok(new ApiResponse<InvestmentTypeDto> { Data = investmentType });
     }
 }
 

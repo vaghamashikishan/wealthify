@@ -1,6 +1,7 @@
 using wealthify.DTOs.InvestmentType;
 using wealthify.Entity;
 using wealthify.Exceptions;
+using wealthify.Extensions;
 using wealthify.Repositories.Interfaces;
 using wealthify.Services.Interfaces;
 
@@ -22,24 +23,13 @@ public class InvestmentTypeService(IInvestmentTypeRepository repository) : IInve
             CreatedAt = DateTime.UtcNow
         };
 
-        var created = await repository.CreateInvestmentTypeAsync(investmentType, cancellationToken);
-        return MapToDto(created);
+        var createdInvestmentType = await repository.CreateInvestmentTypeAsync(investmentType, cancellationToken);
+        return createdInvestmentType.ToDto();
     }
 
     public async Task<InvestmentTypeDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         var investmentType = await repository.GetByIdAsync(id, cancellationToken);
-        return investmentType is null ? null : MapToDto(investmentType);
-    }
-
-    private static InvestmentTypeDto MapToDto(InvestmentType investmentType)
-    {
-        return new InvestmentTypeDto
-        {
-            Id = investmentType.Id,
-            Name = investmentType.Name,
-            CreatedAt = investmentType.CreatedAt,
-            UpdatedAt = investmentType.UpdatedAt
-        };
+        return investmentType?.ToDto();
     }
 }
