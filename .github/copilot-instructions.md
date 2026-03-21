@@ -47,3 +47,13 @@
 - Make focused, minimal changes that align with existing project patterns.
 - Preserve current architecture and API behavior unless explicitly asked to change it.
 - When implementing new features, include all required layers (DTO, repository, service, controller, DI registration, migration if needed).
+
+## User Preferences
+
+- Ask clarifying questions first when any requirement is ambiguous. Do not assume missing details.
+- Keep API route conventions explicit and stable. For `ExpenseType` use `/api/v1/expense-types` with:
+    - `POST /api/v1/expense-types`
+    - `GET /api/v1/expense-types`
+    - `GET /api/v1/expense-types/{id}`
+    - `PUT /api/v1/expense-types`
+    - `DELETE /api/v1/expense-types/{id}`
