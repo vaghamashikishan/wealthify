@@ -15,10 +15,12 @@ public static class ServiceCollectionExtensions
             // Repositories
             services.AddScoped<IInvestmentTypeRepository, InvestmentTypeRepository>();
             services.AddScoped<IFamilyMemberRepository, FamilyMemberRepository>();
+            services.AddScoped<IExpenseTypeRepository, ExpenseTypeRepository>();
 
             // Services
             services.AddScoped<IInvestmentTypeService, InvestmentTypeService>();
             services.AddScoped<IFamilyMemberService, FamilyMemberService>();
+            services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
             return services;
         }
     }
