@@ -1,5 +1,10 @@
 
+using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using wealthify.Database;
 using wealthify.Extensions;
 using wealthify.Middlewares;
@@ -23,12 +28,29 @@ builder.Services.AddHealthChecks()
         tags: new[] { "db", "sql", "postgres" }
     );
 
+// Adding Services, repositories here
 builder.Services.AddApplicationServices();
 
 builder.Services.AddScoped<GlobalExceptionHandlerMiddleware>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+
+// Adding JWT Authentication
+var envConfig = builder.Configuration.GetSection("JWT");
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            ValidIssuer = envConfig["ISSUER"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(envConfig["SECRET_TOKEN"]!)),
+        };
+    });
 
 var app = builder.Build();
 
@@ -42,6 +64,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapHealthChecks("/health"); // Map health check endpoint
 app.MapControllers();
