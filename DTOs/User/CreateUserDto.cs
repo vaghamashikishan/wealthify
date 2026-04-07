@@ -6,15 +6,15 @@ public record class CreateUserDto
 {
     [Required]
     [StringLength(100, MinimumLength = 2)]
-    public string Name { get; set; }
+    public string Name { get; init; }
 
     [Required]
     [EmailAddress]
     [StringLength(150)]
-    public string Email { get; set; }
+    public string Email { get; init; }
 
     [Required]
-    [StringLength(20, MinimumLength = 6)]
-    public string Password { get; set; }
-    public bool IsFamilyHead { get; set; } = false;
+    [StringLength(128, MinimumLength = 6)]
+    public string Password { get; init; }
+    public bool IsFamilyHead { get; init; } = false;
 }

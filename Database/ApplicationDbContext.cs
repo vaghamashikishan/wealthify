@@ -91,6 +91,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         {
             entity.ToTable("users");
             entity.HasKey(u => u.Id);
+            entity.HasQueryFilter(u => u.IsActive);
 
             entity.Property(u => u.Name)
                 .IsRequired()

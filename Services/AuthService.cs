@@ -58,7 +58,7 @@ public class AuthService(IAuthRepository repository, IConfiguration config) : IA
 
         var token = new JwtSecurityToken(
             issuer: config["JWT:ISSUER"],
-            expires: DateTime.UtcNow.AddMinutes(double.Parse(config["JWT:EXPIRY_MINUTES"]!)),
+            expires: DateTime.UtcNow.AddMinutes(config.GetValue<double>("JWT:EXPIRY_MINUTES")!),
             claims: claims,
             signingCredentials: creds
         );

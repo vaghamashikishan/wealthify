@@ -10,6 +10,6 @@ public record class LoginUserDto
     public string Email { get; init; }
 
     [Required]
-    [StringLength(20, MinimumLength = 6)]
+    [StringLength(128, MinimumLength = 6)]
     public string Password { get; init; }
 }

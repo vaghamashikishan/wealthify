@@ -6,7 +6,7 @@ using wealthify.Services.Interfaces;
 
 namespace wealthify.Controllers;
 
-[Route("api/auth")]
+[Route("api/v1/auth")]
 [ApiController]
 public class AuthController(IAuthService service) : ControllerBase
 {
@@ -24,7 +24,7 @@ public class AuthController(IAuthService service) : ControllerBase
 
         if (jwtToken is null)
         {
-            return NotFound(new ApiResponse<string> { Success = false, Errors = ["Username or Password is wrong"] });
+            return Unauthorized(new ApiResponse<string> { Success = false, Errors = ["Invalid email or password"] });
         }
         return Ok(new ApiResponse<string> { Data = jwtToken, Message = "Logged in successfully" });
     }
