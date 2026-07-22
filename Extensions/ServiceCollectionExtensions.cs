@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
             services.AddScoped<IFamilyMemberService, FamilyMemberService>();
             services.AddScoped<IExpenseTypeService, ExpenseTypeService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<TelegramUpdateHandler>();
             return services;
         }
     }

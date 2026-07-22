@@ -10,6 +10,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<FamilyMember> FamilyMembers { get; set; }
     public DbSet<ExpenseType> ExpenseTypes { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Expense> Expenses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -117,6 +118,14 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
             entity.Property(u => u.UpdatedAt)
                 .IsRequired(false);
+        });
+
+        builder.Entity<Expense>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Amount).HasPrecision(18, 2);
+            entity.Property(e => e.Summary).HasMaxLength(500);
+            entity.HasIndex(e => new { e.TelegramUserId, e.TelegramChatId, e.CreatedAtUtc });
         });
     }
 }

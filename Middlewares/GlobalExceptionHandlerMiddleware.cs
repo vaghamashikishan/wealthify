@@ -4,7 +4,7 @@ using wealthify.Models;
 
 namespace wealthify.Middlewares;
 
-public class GlobalExceptionHandlerMiddleware : IMiddleware
+public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger) : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
@@ -18,8 +18,9 @@ public class GlobalExceptionHandlerMiddleware : IMiddleware
         }
     }
 
-    private static async Task HandleExceptionAsync(HttpContext context, Exception ex)
+    private async Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
+        logger.LogError(ex, "Unhandled exception for {Method} {Path}", context.Request.Method, context.Request.Path);
         context.Response.ContentType = "application/json";
 
         var (statusCode, errMessage) = ex is CustomException customException
